@@ -13,7 +13,8 @@ import org.lwjgl.input.Keyboard;
 @Mod(modid = "bearman", version = "1.8.9")
 public class Bearman {
     private final Minecraft mc = Minecraft.getMinecraft();
-    private int forwardState = 0;
+    private int forwardKeyCode;
+    private int forwardState;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -23,7 +24,8 @@ public class Bearman {
     @SubscribeEvent
     public void onInput(InputEvent.KeyInputEvent event) {
         if (Keyboard.getEventKey() == mc.gameSettings.keyBindSprint.getKeyCode() && !Keyboard.getEventKeyState()) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), false);
+            forwardKeyCode = mc.gameSettings.keyBindForward.getKeyCode();
+            KeyBinding.setKeyBindState(forwardKeyCode, false);
             forwardState = 1;
         }
     }
@@ -32,9 +34,8 @@ public class Bearman {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (forwardState == 2) {
             forwardState = 0;
-            int forwardCode = mc.gameSettings.keyBindForward.getKeyCode();
-            if (Keyboard.isKeyDown(forwardCode)) {
-                KeyBinding.setKeyBindState(forwardCode, true);
+            if (Keyboard.isKeyDown(forwardKeyCode)) {
+                KeyBinding.setKeyBindState(forwardKeyCode, true);
             }
         } else if (forwardState == 1) forwardState = 2;
     }
