@@ -32,8 +32,9 @@ public class Bearman {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (forwardState == 2) {
             forwardState = 0;
-            if (Keyboard.isKeyDown(mc.gameSettings.keyBindForward.getKeyCode())) {
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
+            int forwardCode = mc.gameSettings.keyBindForward.getKeyCode();
+            if (Keyboard.isKeyDown(forwardCode)) {
+                KeyBinding.setKeyBindState(forwardCode, true);
             }
         } else if (forwardState == 1) forwardState = 2;
     }
