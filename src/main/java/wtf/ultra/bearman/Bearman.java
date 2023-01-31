@@ -2,6 +2,7 @@ package wtf.ultra.bearman;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -13,7 +14,7 @@ import org.lwjgl.input.Keyboard;
 @Mod(modid = "bearman", version = "1.8.9")
 public class Bearman {
     private final Minecraft mc = Minecraft.getMinecraft();
-    private int forwardKeyCode,forwardState;
+    private int forwardKeyCode, forwardState;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -23,7 +24,7 @@ public class Bearman {
 
     /* Listen to when the sprint key is released. Set forward key state to unpressed */
     @SubscribeEvent
-    public void onInput(InputEvent.KeyInputEvent event) {
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
         // If this input is the sprint key and that key is being released (key up).
         if (Keyboard.getEventKey() == mc.gameSettings.keyBindSprint.getKeyCode() && !Keyboard.getEventKeyState()) {
             forwardKeyCode = mc.gameSettings.keyBindForward.getKeyCode();
@@ -44,4 +45,7 @@ public class Bearman {
             }
         } else if (forwardState == 1) forwardState = 2;
     }
+
+    /* Stops player from opening a GUI while forward movement is being handled. This occurrence is detectable. */
+    @SubscribeEvent public void onGuiOpen(GuiOpenEvent event) { if (forwardState > 0) event.setCanceled(true); }
 }
