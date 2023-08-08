@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bearman",
+  "name": "Bearman",
+  "description": "Overrides vanilla sprint key functionality.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/Ultramicroscope/Bearman",
+  "updateUrl": "",
+  "authorList": ["honeyfuggle"],
+  "credits": "",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
